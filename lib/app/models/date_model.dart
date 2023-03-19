@@ -1,11 +1,11 @@
 import 'package:finance_app/app/models/groups_model.dart';
 
-class DateModel {
+class FinanceModel {
   double price;
   String title;
   List<GroupModel> groups;
 
-  DateModel({
+  FinanceModel({
     required this.price,
     required this.title,
     required this.groups,
@@ -20,8 +20,8 @@ Map<String, dynamic> toMap(){
   
 }
 
-factory DateModel.fromMap(map){
-  return DateModel(
+factory FinanceModel.fromMap(map){
+  return FinanceModel(
     price: map['price']?.toDouble() ?? 0.0,
     title: map['title'] ?? '',
     groups: List<GroupModel>.from(map['groups']?.map((e)=> GroupModel.fromMap(e))).toList()
