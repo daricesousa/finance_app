@@ -2,8 +2,10 @@ import 'package:finance_app/app/app_pages.dart';
 import 'package:finance_app/app/core/ui/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+Future<void> main() async{
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
