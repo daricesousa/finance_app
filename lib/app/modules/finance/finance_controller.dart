@@ -7,4 +7,5 @@ class FinanceController extends GetxController {
   void addFinance(FinanceModel finance) {
     finances.add(finance);
   }
+  
 }

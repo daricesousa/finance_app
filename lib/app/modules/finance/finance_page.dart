@@ -1,8 +1,8 @@
+import 'package:finance_app/app/core/utils/formatters.dart';
 import 'package:finance_app/app/models/finance_model.dart';
 import 'package:finance_app/app/modules/finance/widgets/dialog_add_finance.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/dialog/dialog_route.dart';
 import 'finance_controller.dart';
 
 class FinancePage extends GetView<FinanceController> {
@@ -16,26 +16,33 @@ class FinancePage extends GetView<FinanceController> {
         centerTitle: true,
       ),
       body: body(),
-      floatingActionButton: addbutton(context),
+      floatingActionButton: addButton(context),
     );
   }
 
   Widget body() {
     return Obx(() {
-    final listLength = controller.finances.length;
+      final listLength = controller.finances.length;
       return ListView.builder(
           itemCount: listLength + 1,
           itemBuilder: (context, index) {
             if (index == listLength) return const SizedBox(height: 60);
             final finance = controller.finances[index];
             return ListTile(
-              title: Text(finance.title),
-            );
+                title: Text(finance.title),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Entrada: ${Formatters.moneyDisplay(finance.inflow)}"),
+                    Text(
+                        "Saída: ${Formatters.moneyDisplay(finance.totalAmountGroups())}"),
+                  ],
+                ));
           });
     });
   }
 
-  Widget addbutton(BuildContext context) {
+  Widget addButton(BuildContext context) {
     return FloatingActionButton(
       child: const Icon(Icons.add),
       onPressed: () async {

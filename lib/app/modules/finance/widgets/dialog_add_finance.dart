@@ -34,7 +34,7 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text("Nova finança",
-                style: context.textTheme.headline5,
+                style: context.textTheme.headlineSmall,
                 textAlign: TextAlign.center),
             const SizedBox(height: 20),
             AppFormField(
@@ -51,7 +51,7 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
             const SizedBox(height: 20),
             AppButton(onPressed: () {
               final finance = FinanceModel(
-                entrada: Formatters.moneyToDouble(editPrice.text),
+                inflow: Formatters.moneyToDouble(editPrice.text),
                 title: editTitle.text,
                 groups: [],
               );
