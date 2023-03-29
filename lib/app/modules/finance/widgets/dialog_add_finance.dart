@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:mask/mask.dart';
 
 class DialogAddFinance extends StatefulWidget {
-  const DialogAddFinance({Key? key}) : super(key: key);
+  final FinanceModel? finance;
+  const DialogAddFinance({Key? key, this.finance}) : super(key: key);
 
   @override
   State<DialogAddFinance> createState() => _DialogAddFinanceState();
@@ -18,10 +19,24 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
   final editPrice = TextEditingController();
 
   @override
+  void initState() {
+    if (widget.finance != null) {
+      loadFinance();
+    }
+    super.initState();
+  }
+
+  @override
   void dispose() {
     editTitle.dispose();
     editPrice.dispose();
     super.dispose();
+  }
+
+  loadFinance() {
+    final FinanceModel finance = widget.finance!;
+    editTitle.text = finance.title;
+    editPrice.text = Formatters.moneyDisplay(finance.inflow);
   }
 
   @override
@@ -50,12 +65,13 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
             ),
             const SizedBox(height: 20),
             AppButton(onPressed: () {
-              final finance = FinanceModel(
+              final newFinance = FinanceModel(
+                id: widget.finance?.id,
                 inflow: Formatters.moneyToDouble(editPrice.text),
                 title: editTitle.text,
                 groups: [],
               );
-              Get.back(result: finance);
+              Get.back(result: newFinance);
             })
           ],
         ),

@@ -29,4 +29,11 @@ class FinanceController extends GetxController {
     final elements = data.map<FinanceModel>((e) => FinanceModel.fromMap(e));
     finances.assignAll(elements);
   }
+
+  void editFinance({required FinanceModel finance}) {
+    final index = finances.indexWhere((e) => e.id == finance.id);
+    if (index > -1) {
+      finances[index] = finance;
+    }
+  }
 }

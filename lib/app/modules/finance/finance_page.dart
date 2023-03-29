@@ -28,30 +28,44 @@ class FinancePage extends GetView<FinanceController> {
           itemBuilder: (context, index) {
             if (index == listLength) return const SizedBox(height: 60);
             final finance = controller.finances[index];
-            return ListTile(
-                title: Text(finance.title),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Entrada: ${Formatters.moneyDisplay(finance.inflow)}"),
-                    Text(
-                        "Saída: ${Formatters.moneyDisplay(finance.totalAmountGroups())}"),
-                  ],
-                ));
+            return GestureDetector(
+              child: ListTile(
+                  title: Text(finance.title),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          "Entrada: ${Formatters.moneyDisplay(finance.inflow)}"),
+                      Text(
+                          "Saída: ${Formatters.moneyDisplay(finance.totalAmountGroups())}"),
+                    ],
+                  )),
+              onLongPress: () async {
+                final res =
+                    await openDialog(context: context, finance: finance);
+                if (res != null) {
+                  controller.editFinance(finance: res);
+                }
+              },
+            );
           });
     });
+  }
+
+  Future<FinanceModel?> openDialog(
+      {required BuildContext context, FinanceModel? finance}) async {
+    return await showDialog<FinanceModel>(
+        context: context,
+        builder: (context) {
+          return DialogAddFinance(finance: finance);
+        });
   }
 
   Widget addButton(BuildContext context) {
     return FloatingActionButton(
       child: const Icon(Icons.add),
       onPressed: () async {
-        final res = await showDialog<FinanceModel>(
-          context: context,
-          builder: (context) {
-            return const DialogAddFinance();
-          },
-        );
+        final res = await openDialog(context: context);
         if (res != null) {
           controller.addFinance(res);
         }
