@@ -1,5 +1,6 @@
 import 'package:finance_app/app/core/utils/formatters.dart';
 import 'package:finance_app/app/models/finance_model.dart';
+import 'package:finance_app/app/modules/finance/widgets/bottom_sheet_finance.dart';
 import 'package:finance_app/app/modules/finance/widgets/dialog_add_finance.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -40,25 +41,46 @@ class FinancePage extends GetView<FinanceController> {
                           "Saída: ${Formatters.moneyDisplay(finance.totalAmountGroups())}"),
                     ],
                   )),
-              onLongPress: () async {
-                final res =
-                    await openDialog(context: context, finance: finance);
-                if (res != null) {
-                  controller.editFinance(finance: res);
-                }
-              },
+              onLongPress: () =>
+                  openButtonSheet(context: context, finance: finance),
             );
           });
     });
   }
 
   Future<FinanceModel?> openDialog(
-      {required BuildContext context, FinanceModel? finance}) async {
+      {required BuildContext context,
+      FinanceModel? finance,
+      String? titleDialog}) async {
     return await showDialog<FinanceModel>(
         context: context,
         builder: (context) {
-          return DialogAddFinance(finance: finance);
+          return DialogAddFinance(
+            finance: finance,
+            titleDialog: titleDialog,
+          );
         });
+  }
+
+  void openButtonSheet(
+      {required BuildContext context, required FinanceModel finance}) async {
+    Get.bottomSheet<String?>(
+      BottomSheetFinance(callback: (option) async {
+        Get.back();
+        if (option == 1) {
+          final res = await openDialog(
+              context: context,
+              finance: finance,
+              titleDialog: "Editar finança");
+          if (res != null) {
+            controller.editFinance(finance: res);
+          }
+        }
+      }),
+      persistent: false,
+      backgroundColor: Colors.white,
+      elevation: 2,
+    );
   }
 
   Widget addButton(BuildContext context) {

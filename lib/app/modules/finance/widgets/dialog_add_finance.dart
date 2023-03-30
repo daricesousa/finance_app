@@ -8,7 +8,9 @@ import 'package:mask/mask.dart';
 
 class DialogAddFinance extends StatefulWidget {
   final FinanceModel? finance;
-  const DialogAddFinance({Key? key, this.finance}) : super(key: key);
+  final String? titleDialog;
+  const DialogAddFinance({Key? key, this.finance, this.titleDialog})
+      : super(key: key);
 
   @override
   State<DialogAddFinance> createState() => _DialogAddFinanceState();
@@ -48,7 +50,7 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text("Nova finança",
+            Text(widget.titleDialog ?? "Nova finança",
                 style: context.textTheme.headlineSmall,
                 textAlign: TextAlign.center),
             const SizedBox(height: 20),
