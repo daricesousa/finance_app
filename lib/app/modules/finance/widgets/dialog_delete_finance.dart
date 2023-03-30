@@ -1,3 +1,4 @@
+import 'package:finance_app/app/core/ui/app_color.dart';
 import 'package:finance_app/app/core/widgets/app_button.dart';
 import 'package:finance_app/app/models/finance_model.dart';
 import 'package:flutter/material.dart';
@@ -41,11 +42,14 @@ class _DialogDeleteFinanceState extends State<DialogDeleteFinance> {
               children: [
                 AppButton(
                     label: "Cancelar",
+                    color: AppColor.primary,
                     onPressed: () {
                       Get.back();
                     }),
                 AppButton(
                     label: "Confirmar",
+                    color: AppColor.red,
+                    colorLabel: Colors.white,
                     onPressed: () {
                       Get.back(result: true);
                     }),

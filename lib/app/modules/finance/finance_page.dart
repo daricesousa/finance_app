@@ -1,3 +1,4 @@
+import 'package:finance_app/app/core/ui/app_color.dart';
 import 'package:finance_app/app/core/utils/formatters.dart';
 import 'package:finance_app/app/models/finance_model.dart';
 import 'package:finance_app/app/modules/finance/widgets/bottom_sheet_finance.dart';
@@ -14,7 +15,11 @@ class FinancePage extends GetView<FinanceController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Finanças'),
+        title: const Text('Finanças',
+            style: TextStyle(
+              color: AppColor.dark,
+              fontWeight: FontWeight.w300,
+            )),
         centerTitle: true,
       ),
       body: body(),
@@ -26,22 +31,28 @@ class FinancePage extends GetView<FinanceController> {
     return Obx(() {
       final listLength = controller.finances.length;
       return ListView.builder(
+          padding: const EdgeInsets.all(5),
           itemCount: listLength + 1,
           itemBuilder: (context, index) {
             if (index == listLength) return const SizedBox(height: 60);
             final finance = controller.finances[index];
             return GestureDetector(
-              child: ListTile(
-                  title: Text(finance.title),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          "Entrada: ${Formatters.moneyDisplay(finance.inflow)}"),
-                      Text(
-                          "Saída: ${Formatters.moneyDisplay(finance.totalAmountGroups())}"),
-                    ],
-                  )),
+              child: Card(
+                child: ListTile(
+                    title: Text(
+                      finance.title,
+                      style: const TextStyle(color: AppColor.dark),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "Entrada: ${Formatters.moneyDisplay(finance.inflow)}"),
+                        Text(
+                            "Saída: ${Formatters.moneyDisplay(finance.totalAmountGroups())}"),
+                      ],
+                    )),
+              ),
               onLongPress: () =>
                   openButtonSheet(context: context, finance: finance),
             );
@@ -95,7 +106,11 @@ class FinancePage extends GetView<FinanceController> {
 
   Widget addButton(BuildContext context) {
     return FloatingActionButton(
-      child: const Icon(Icons.add),
+      backgroundColor: AppColor.primary,
+      child: const Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
       onPressed: () async {
         final res = await openDialog(context: context);
         if (res != null) {
