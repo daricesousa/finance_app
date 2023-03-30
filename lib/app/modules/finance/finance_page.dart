@@ -2,6 +2,7 @@ import 'package:finance_app/app/core/utils/formatters.dart';
 import 'package:finance_app/app/models/finance_model.dart';
 import 'package:finance_app/app/modules/finance/widgets/bottom_sheet_finance.dart';
 import 'package:finance_app/app/modules/finance/widgets/dialog_add_finance.dart';
+import 'package:finance_app/app/modules/finance/widgets/dialog_delete_finance.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'finance_controller.dart';
@@ -74,6 +75,15 @@ class FinancePage extends GetView<FinanceController> {
               titleDialog: "Editar finança");
           if (res != null) {
             controller.editFinance(finance: res);
+          }
+        } else if (option == 3) {
+          final res = await showDialog<bool?>(
+              context: context,
+              builder: (context) {
+                return DialogDeleteFinance(finance: finance);
+              });
+          if (res == true) {
+            controller.delete(finance: finance);
           }
         }
       }),

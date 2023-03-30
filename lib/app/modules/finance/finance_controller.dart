@@ -36,4 +36,8 @@ class FinanceController extends GetxController {
       finances[index] = finance;
     }
   }
+
+  void delete({required FinanceModel finance}) {
+    finances.removeWhere((e) => e.id == finance.id);
+  }
 }
