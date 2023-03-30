@@ -1,26 +1,28 @@
 import 'package:finance_app/app/core/utils/formatters.dart';
 import 'package:finance_app/app/core/widgets/app_button.dart';
 import 'package:finance_app/app/core/widgets/app_form_field.dart';
-import 'package:finance_app/app/models/finance_model.dart';
+import 'package:finance_app/app/models/groups_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask/mask.dart';
 
-class DialogAddFinance extends StatefulWidget {
-  final FinanceModel? finance;
-  const DialogAddFinance({Key? key, this.finance}) : super(key: key);
+class DialogAddGroup extends StatefulWidget {
+  final GroupModel? group;
+  final String? titleDialog;
+  const DialogAddGroup({Key? key, this.group, this.titleDialog})
+      : super(key: key);
 
   @override
-  State<DialogAddFinance> createState() => _DialogAddFinanceState();
+  State<DialogAddGroup> createState() => _DialogAddGroupState();
 }
 
-class _DialogAddFinanceState extends State<DialogAddFinance> {
+class _DialogAddGroupState extends State<DialogAddGroup> {
   final editTitle = TextEditingController();
   final editPrice = TextEditingController();
 
   @override
   void initState() {
-    if (widget.finance != null) {
+    if (widget.group != null) {
       loadFinance();
     }
     super.initState();
@@ -34,9 +36,9 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
   }
 
   loadFinance() {
-    final FinanceModel finance = widget.finance!;
-    editTitle.text = finance.title;
-    editPrice.text = Formatters.moneyDisplay(finance.inflow);
+    final GroupModel group = widget.group!;
+    editTitle.text = group.title;
+    editPrice.text = Formatters.moneyDisplay(group.spendingLimit);
   }
 
   @override
@@ -48,15 +50,9 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Visibility(
-              visible: widget.finance == null,
-              replacement: Text("Editar finança",
-                  style: context.textTheme.headlineSmall,
-                  textAlign: TextAlign.center),
-              child: Text("Nova finança",
-                  style: context.textTheme.headlineSmall,
-                  textAlign: TextAlign.center),
-            ),
+            Text(widget.titleDialog ?? "Novo grupo",
+                style: context.textTheme.headlineSmall,
+                textAlign: TextAlign.center),
             const SizedBox(height: 20),
             AppFormField(
               label: "Título",
@@ -64,20 +60,20 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
               controller: editTitle,
             ),
             AppFormField(
-              label: "Total de entrada",
+              label: "Limite de gastos",
               textInputType: TextInputType.number,
               inputFormatters: [Mask.money()],
               controller: editPrice,
             ),
             const SizedBox(height: 20),
             AppButton(onPressed: () {
-              final newFinance = FinanceModel(
-                id: widget.finance?.id,
-                inflow: Formatters.moneyToDouble(editPrice.text),
+              final newGroup = GroupModel(
+                id: widget.group?.id,
+                spendingLimit: Formatters.moneyToDouble(editPrice.text),
                 title: editTitle.text,
-                groups: widget.finance?.groups ?? [],
+                expenses: [],
               );
-              Get.back(result: newFinance);
+              Get.back(result: newGroup);
             })
           ],
         ),

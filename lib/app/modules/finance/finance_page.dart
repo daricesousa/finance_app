@@ -53,6 +53,7 @@ class FinancePage extends GetView<FinanceController> {
                       ],
                     )),
               ),
+              onTap: () => Get.toNamed('/group', arguments: finance),
               onLongPress: () =>
                   openButtonSheet(context: context, finance: finance),
             );
@@ -69,7 +70,6 @@ class FinancePage extends GetView<FinanceController> {
         builder: (context) {
           return DialogAddFinance(
             finance: finance,
-            titleDialog: titleDialog,
           );
         });
   }

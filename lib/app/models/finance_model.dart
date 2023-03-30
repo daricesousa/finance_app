@@ -34,7 +34,7 @@ class FinanceModel {
 
   double totalAmountGroups() {
     if (groups.isEmpty) return 0;
-    final prices = groups.map((e) => e.price).toList();
+    final prices = groups.map((e) => e.spendingLimit).toList();
     return prices.reduce((a, b) => a + b);
   }
 }

@@ -32,7 +32,8 @@ class _DialogDeleteFinanceState extends State<DialogDeleteFinance> {
                   children: [
                     TextSpan(
                         text: widget.finance.title,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, color: AppColor.dark)),
                     const TextSpan(text: " ?"),
                   ]),
             ),
