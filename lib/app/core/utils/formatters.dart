@@ -7,12 +7,11 @@ class Formatters {
   static double moneyToDouble(String money) {
     final result =
         money.replaceAll('.', '').replaceAll('R\$', '').replaceAll(',', '.');
-    return double.parse(result);
+    return double.tryParse(result) ?? 0.0;
   }
 
   static String moneyDisplay(double money) {
-    money = money * 10;
-    final value = TextEditingValue(text: money.toString());
+    final value = TextEditingValue(text: money.toStringAsFixed(2));
     final res = Mask.money().formatEditUpdate(value, value);
     return res.text;
   }
