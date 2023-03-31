@@ -11,8 +11,11 @@ class ExpenseController extends GetxController {
   @override
   void onReady() {
     expenses.value = group.expenses;
-    // expenses.add(ExpenseModel(price: 0.5, title: "hamburguer"));
-    // _groupController.editGroup(group: group);
     super.onReady();
+  }
+
+  void addExpense({required ExpenseModel expense}) {
+    expenses.add(expense);
+    _groupController.editGroup(group: group);
   }
 }

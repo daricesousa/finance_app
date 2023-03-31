@@ -1,5 +1,7 @@
 import 'package:finance_app/app/core/ui/app_color.dart';
 import 'package:finance_app/app/core/utils/formatters.dart';
+import 'package:finance_app/app/models/expense_model.dart';
+import 'package:finance_app/app/modules/expense/widgets/dialog_add_expense.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import './expense_controller.dart';
@@ -26,6 +28,7 @@ class ExpensePage extends GetView<ExpenseController> {
         ),
       ),
       body: _Body(controller: controller),
+      floatingActionButton: _FloatingButton(controller: controller),
     );
   }
 }
@@ -53,5 +56,29 @@ class _Body extends StatelessWidget {
             );
           });
     });
+  }
+}
+
+class _FloatingButton extends StatelessWidget {
+  final ExpenseController controller;
+  const _FloatingButton({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: AppColor.primary,
+      onPressed: () async {
+        final res = await showDialog<ExpenseModel?>(
+            context: context,
+            builder: (context) {
+              return const DialogAddExpense();
+            });
+        if (res != null) controller.addExpense(expense: res);
+      },
+      child: const Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
+    );
   }
 }
