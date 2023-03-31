@@ -1,7 +1,9 @@
 import 'package:finance_app/app/core/ui/app_color.dart';
 import 'package:finance_app/app/core/utils/formatters.dart';
 import 'package:finance_app/app/models/groups_model.dart';
+import 'package:finance_app/app/modules/group/widgets/bottom_sheet_group.dart';
 import 'package:finance_app/app/modules/group/widgets/dialog_add_group.dart';
+import 'package:finance_app/app/modules/group/widgets/dialog_delete_group.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'group_controller.dart';
@@ -15,11 +17,19 @@ class GroupPage extends GetView<GroupController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.finance.title,
-            style: const TextStyle(
-              color: AppColor.dark,
-              fontWeight: FontWeight.w300,
-            )),
+        title: Visibility(
+          visible: controller.finance.title != '',
+          replacement: const Text("Grupo",
+              style: TextStyle(
+                color: AppColor.dark,
+                fontWeight: FontWeight.w300,
+              )),
+          child: Text(controller.finance.title,
+              style: const TextStyle(
+                color: AppColor.dark,
+                fontWeight: FontWeight.w300,
+              )),
+        ),
         centerTitle: true,
       ),
       body: body(),
@@ -52,6 +62,8 @@ class GroupPage extends GetView<GroupController> {
                       ],
                     )),
               ),
+              onLongPress: () =>
+                  openBottomSheet(context: context, group: group),
             );
           });
     });
@@ -61,7 +73,7 @@ class GroupPage extends GetView<GroupController> {
       {required BuildContext context,
       GroupModel? group,
       String? titleDialog}) async {
-    return await showDialog<GroupModel>(
+    return await showDialog<GroupModel?>(
         context: context,
         builder: (context) {
           return DialogAddGroup(
@@ -69,6 +81,30 @@ class GroupPage extends GetView<GroupController> {
             titleDialog: titleDialog,
           );
         });
+  }
+
+  void openBottomSheet(
+      {required BuildContext context, required GroupModel group}) {
+    Get.bottomSheet<String?>(
+      BottomSheetGroup(callback: (option) async {
+        if (option == 1) {
+          final res = await openDialog(context: context, group: group);
+          if (res != null) controller.editGroup(group: res);
+        } else if (option == 3) {
+          final res = await showDialog<bool>(
+              context: context,
+              builder: (context) {
+                return DialogDeleteGroup(
+                  group: group,
+                );
+              });
+          if (res == true) controller.deleteGroup(group: group);
+        }
+        Get.back();
+      }),
+      backgroundColor: Colors.white,
+      persistent: false,
+    );
   }
 
   Widget addButton(BuildContext context) {
@@ -80,9 +116,7 @@ class GroupPage extends GetView<GroupController> {
       ),
       onPressed: () async {
         final res = await openDialog(context: context);
-        if (res != null) {
-          controller.addGroup(res);
-        }
+        if (res != null) controller.addGroup(group: res);
       },
     );
   }
