@@ -32,4 +32,10 @@ class GroupModel {
           map["expenses"]?.map((e) => ExpenseModel.fromMap(e))),
     );
   }
+
+  double totalAmountExpenses() {
+    if (expenses.isEmpty) return 0.0;
+    final prices = expenses.map((e) => e.price);
+    return prices.reduce((a, b) => a + b);
+  }
 }

@@ -49,7 +49,7 @@ class FinancePage extends GetView<FinanceController> {
                         Text(
                             "Entrada: ${Formatters.moneyDisplay(finance.inflow)}"),
                         Text(
-                            "Saída: ${Formatters.moneyDisplay(finance.totalAmountGroups())}"),
+                            "Saída: ${Formatters.moneyDisplay(finance.totalAmountExpenses())}"),
                       ],
                     )),
               ),

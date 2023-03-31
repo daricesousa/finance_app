@@ -32,9 +32,13 @@ class FinanceModel {
             map['groups']?.map((e) => GroupModel.fromMap(e))).toList());
   }
 
-  double totalAmountGroups() {
-    if (groups.isEmpty) return 0;
-    final prices = groups.map((e) => e.spendingLimit).toList();
-    return prices.reduce((a, b) => a + b);
+  double totalAmountExpenses() {
+    var total = 0.0;
+    for (var group in groups) {
+      for (var expense in group.expenses) {
+        total += expense.price;
+      }
+    }
+    return total;
   }
 }

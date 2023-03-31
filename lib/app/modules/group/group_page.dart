@@ -58,7 +58,8 @@ class GroupPage extends GetView<GroupController> {
                       children: [
                         Text(
                             "Limite de gastos: ${Formatters.moneyDisplay(group.spendingLimit)}"),
-                        Text("Saída: ${Formatters.moneyDisplay(0)}"),
+                        Text(
+                            "Saída: ${Formatters.moneyDisplay(group.totalAmountExpenses())}"),
                       ],
                     )),
               ),
