@@ -35,7 +35,7 @@ class GroupModel {
 
   double totalAmountExpenses() {
     if (expenses.isEmpty) return 0.0;
-    final prices = expenses.map((e) => e.price);
+    final prices = expenses.map((e) => e.cost);
     return prices.reduce((a, b) => a + b);
   }
 }

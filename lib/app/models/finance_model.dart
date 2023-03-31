@@ -36,7 +36,7 @@ class FinanceModel {
     var total = 0.0;
     for (var group in groups) {
       for (var expense in group.expenses) {
-        total += expense.price;
+        total += expense.cost;
       }
     }
     return total;

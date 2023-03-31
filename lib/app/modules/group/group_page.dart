@@ -63,6 +63,7 @@ class GroupPage extends GetView<GroupController> {
                       ],
                     )),
               ),
+              onTap: () => Get.toNamed('/expense', arguments: group),
               onLongPress: () =>
                   openBottomSheet(context: context, group: group),
             );

@@ -1,3 +1,5 @@
+import 'package:finance_app/app/modules/expense/expense_bindings.dart';
+import 'package:finance_app/app/modules/expense/expense_page.dart';
 import 'package:finance_app/app/modules/finance/finance_bindings.dart';
 import 'package:finance_app/app/modules/finance/finance_page.dart';
 import 'package:finance_app/app/modules/group/group_bindings.dart';
@@ -14,6 +16,14 @@ class AppPages {
       binding: FinanceBindings(),
     ),
     GetPage(
-        name: '/group', page: () => const GroupPage(), binding: GroupBindings())
+      name: '/group',
+      page: () => const GroupPage(),
+      binding: GroupBindings(),
+    ),
+    GetPage(
+      name: '/expense',
+      page: () => const ExpensePage(),
+      binding: ExpenseBindings(),
+    ),
   ];
 }
