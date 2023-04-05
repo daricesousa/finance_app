@@ -54,8 +54,11 @@ class _Body extends StatelessWidget {
                 title: Text(expense.title),
                 subtitle:
                     Text("Custo: ${Formatters.moneyDisplay(expense.cost)}"),
-                onLongPress: () =>
-                    openBottomSheet(controller: controller, expense: expense),
+                onLongPress: () => openBottomSheet(
+                  context: context,
+                  controller: controller,
+                  expense: expense,
+                ),
               ),
             );
           });
@@ -64,10 +67,22 @@ class _Body extends StatelessWidget {
 }
 
 void openBottomSheet(
-    {required ExpenseController controller, required ExpenseModel expense}) {
+    {required ExpenseController controller,
+    required ExpenseModel expense,
+    required BuildContext context}) {
   Get.bottomSheet(
     BottomSheetExpense(
-      callback: (e) {},
+      callback: (e) async {
+        if (e == 1) {
+          Get.back();
+          final res = await showDialog<ExpenseModel?>(
+              context: context,
+              builder: (context) {
+                return DialogAddExpense(expense: expense);
+              });
+          if (res != null) controller.editExpense(expense: res);
+        }
+      },
     ),
     persistent: false,
     backgroundColor: Colors.white,

@@ -18,4 +18,10 @@ class ExpenseController extends GetxController {
     expenses.add(expense);
     _groupController.editGroup(group: group);
   }
+
+  void editExpense({required ExpenseModel expense}) {
+    final index = expenses.indexWhere((e) => e.id == expense.id);
+    expenses[index] = expense;
+    _groupController.editGroup(group: group);
+  }
 }
