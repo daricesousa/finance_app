@@ -71,7 +71,7 @@ class _DialogAddGroupState extends State<DialogAddGroup> {
                 id: widget.group?.id,
                 spendingLimit: Formatters.moneyToDouble(editPrice.text),
                 title: editTitle.text,
-                expenses: [],
+                expenses: widget.group?.expenses ?? [],
               );
               Get.back(result: newGroup);
             })
