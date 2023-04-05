@@ -1,6 +1,7 @@
 import 'package:finance_app/app/core/ui/app_color.dart';
 import 'package:finance_app/app/core/utils/formatters.dart';
 import 'package:finance_app/app/models/expense_model.dart';
+import 'package:finance_app/app/modules/expense/widgets/bottom_sheet_expense.dart';
 import 'package:finance_app/app/modules/expense/widgets/dialog_add_expense.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -50,13 +51,28 @@ class _Body extends StatelessWidget {
             final expense = controller.expenses[index];
             return Card(
               child: ListTile(
-                  title: Text(expense.title),
-                  subtitle:
-                      Text("Custo: ${Formatters.moneyDisplay(expense.cost)}")),
+                title: Text(expense.title),
+                subtitle:
+                    Text("Custo: ${Formatters.moneyDisplay(expense.cost)}"),
+                onLongPress: () =>
+                    openBottomSheet(controller: controller, expense: expense),
+              ),
             );
           });
     });
   }
+}
+
+void openBottomSheet(
+    {required ExpenseController controller, required ExpenseModel expense}) {
+  Get.bottomSheet(
+    BottomSheetExpense(
+      callback: (e) {},
+    ),
+    persistent: false,
+    backgroundColor: Colors.white,
+    elevation: 2,
+  );
 }
 
 class _FloatingButton extends StatelessWidget {

@@ -55,7 +55,7 @@ class FinancePage extends GetView<FinanceController> {
               ),
               onTap: () => Get.toNamed('/group', arguments: finance),
               onLongPress: () =>
-                  openButtonSheet(context: context, finance: finance),
+                  openBottomSheet(context: context, finance: finance),
             );
           });
     });
@@ -74,8 +74,8 @@ class FinancePage extends GetView<FinanceController> {
         });
   }
 
-  void openButtonSheet(
-      {required BuildContext context, required FinanceModel finance}) async {
+  void openBottomSheet(
+      {required BuildContext context, required FinanceModel finance}) {
     Get.bottomSheet<String?>(
       BottomSheetFinance(callback: (option) async {
         Get.back();
