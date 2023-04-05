@@ -44,41 +44,43 @@ class _DialogAddExpenseState extends State<DialogAddExpense> {
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Visibility(
-              visible: widget.expense == null,
-              replacement: Text("Editar despesa",
-                  style: context.textTheme.headlineSmall,
-                  textAlign: TextAlign.center),
-              child: Text("Nova despesa",
-                  style: context.textTheme.headlineSmall,
-                  textAlign: TextAlign.center),
-            ),
-            const SizedBox(height: 20),
-            AppFormField(
-              label: "Título",
-              maxLength: 20,
-              controller: editTitle,
-            ),
-            AppFormField(
-              label: "Custo",
-              textInputType: TextInputType.number,
-              inputFormatters: [Mask.money()],
-              controller: editPrice,
-            ),
-            const SizedBox(height: 20),
-            AppButton(onPressed: () {
-              final newExpense = ExpenseModel(
-                id: widget.expense?.id,
-                cost: Formatters.moneyToDouble(editPrice.text),
-                title: editTitle.text,
-              );
-              Get.back(result: newExpense);
-            }),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Visibility(
+                visible: widget.expense == null,
+                replacement: Text("Editar despesa",
+                    style: context.textTheme.headlineSmall,
+                    textAlign: TextAlign.center),
+                child: Text("Nova despesa",
+                    style: context.textTheme.headlineSmall,
+                    textAlign: TextAlign.center),
+              ),
+              const SizedBox(height: 20),
+              AppFormField(
+                label: "Título",
+                maxLength: 20,
+                controller: editTitle,
+              ),
+              AppFormField(
+                label: "Custo",
+                textInputType: TextInputType.number,
+                inputFormatters: [Mask.money()],
+                controller: editPrice,
+              ),
+              const SizedBox(height: 20),
+              AppButton(onPressed: () {
+                final newExpense = ExpenseModel(
+                  id: widget.expense?.id,
+                  cost: Formatters.moneyToDouble(editPrice.text),
+                  title: editTitle.text,
+                );
+                Get.back(result: newExpense);
+              }),
+            ],
+          ),
         ),
       ),
     );

@@ -44,42 +44,44 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Visibility(
-              visible: widget.finance == null,
-              replacement: Text("Editar finança",
-                  style: context.textTheme.headlineSmall,
-                  textAlign: TextAlign.center),
-              child: Text("Nova finança",
-                  style: context.textTheme.headlineSmall,
-                  textAlign: TextAlign.center),
-            ),
-            const SizedBox(height: 20),
-            AppFormField(
-              label: "Título",
-              maxLength: 20,
-              controller: editTitle,
-            ),
-            AppFormField(
-              label: "Total de entrada",
-              textInputType: TextInputType.number,
-              inputFormatters: [Mask.money()],
-              controller: editPrice,
-            ),
-            const SizedBox(height: 20),
-            AppButton(onPressed: () {
-              final newFinance = FinanceModel(
-                id: widget.finance?.id,
-                inflow: Formatters.moneyToDouble(editPrice.text),
-                title: editTitle.text,
-                groups: widget.finance?.groups ?? [],
-              );
-              Get.back(result: newFinance);
-            })
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Visibility(
+                visible: widget.finance == null,
+                replacement: Text("Editar finança",
+                    style: context.textTheme.headlineSmall,
+                    textAlign: TextAlign.center),
+                child: Text("Nova finança",
+                    style: context.textTheme.headlineSmall,
+                    textAlign: TextAlign.center),
+              ),
+              const SizedBox(height: 20),
+              AppFormField(
+                label: "Título",
+                maxLength: 20,
+                controller: editTitle,
+              ),
+              AppFormField(
+                label: "Total de entrada",
+                textInputType: TextInputType.number,
+                inputFormatters: [Mask.money()],
+                controller: editPrice,
+              ),
+              const SizedBox(height: 20),
+              AppButton(onPressed: () {
+                final newFinance = FinanceModel(
+                  id: widget.finance?.id,
+                  inflow: Formatters.moneyToDouble(editPrice.text),
+                  title: editTitle.text,
+                  groups: widget.finance?.groups ?? [],
+                );
+                Get.back(result: newFinance);
+              })
+            ],
+          ),
         ),
       ),
     );

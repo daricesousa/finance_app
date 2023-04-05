@@ -46,36 +46,38 @@ class _DialogAddGroupState extends State<DialogAddGroup> {
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(widget.titleDialog ?? "Novo grupo",
-                style: context.textTheme.headlineSmall,
-                textAlign: TextAlign.center),
-            const SizedBox(height: 20),
-            AppFormField(
-              label: "Título",
-              maxLength: 20,
-              controller: editTitle,
-            ),
-            AppFormField(
-              label: "Limite de gastos",
-              textInputType: TextInputType.number,
-              inputFormatters: [Mask.money()],
-              controller: editPrice,
-            ),
-            const SizedBox(height: 20),
-            AppButton(onPressed: () {
-              final newGroup = GroupModel(
-                id: widget.group?.id,
-                spendingLimit: Formatters.moneyToDouble(editPrice.text),
-                title: editTitle.text,
-                expenses: widget.group?.expenses ?? [],
-              );
-              Get.back(result: newGroup);
-            })
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(widget.titleDialog ?? "Novo grupo",
+                  style: context.textTheme.headlineSmall,
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 20),
+              AppFormField(
+                label: "Título",
+                maxLength: 20,
+                controller: editTitle,
+              ),
+              AppFormField(
+                label: "Limite de gastos",
+                textInputType: TextInputType.number,
+                inputFormatters: [Mask.money()],
+                controller: editPrice,
+              ),
+              const SizedBox(height: 20),
+              AppButton(onPressed: () {
+                final newGroup = GroupModel(
+                  id: widget.group?.id,
+                  spendingLimit: Formatters.moneyToDouble(editPrice.text),
+                  title: editTitle.text,
+                  expenses: widget.group?.expenses ?? [],
+                );
+                Get.back(result: newGroup);
+              })
+            ],
+          ),
         ),
       ),
     );
