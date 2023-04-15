@@ -20,11 +20,9 @@ class _DialogDeleteFinanceState extends State<DialogDeleteFinance> {
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Deletar finança",
-                style: context.textTheme.headlineSmall,
-                textAlign: TextAlign.center),
+            Text("Deletar finança", style: context.textTheme.headlineSmall),
             const SizedBox(height: 20),
             Text.rich(
               TextSpan(
@@ -34,12 +32,12 @@ class _DialogDeleteFinanceState extends State<DialogDeleteFinance> {
                         text: widget.finance.title,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, color: AppColor.dark)),
-                    const TextSpan(text: " ?"),
+                    const TextSpan(text: "?"),
                   ]),
             ),
             const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 AppButton(
                     label: "Cancelar",

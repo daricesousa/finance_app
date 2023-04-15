@@ -46,26 +46,28 @@ class GroupPage extends GetView<GroupController> {
           itemBuilder: (context, index) {
             if (index == listLength) return const SizedBox(height: 60);
             final group = controller.groups[index];
-            return GestureDetector(
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(20),
               child: Card(
                 child: ListTile(
-                    title: Text(
-                      group.title,
-                      style: const TextStyle(color: AppColor.dark),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            "Limite de gastos: ${Formatters.moneyDisplay(group.spendingLimit)}"),
-                        Text(
-                            "Saída: ${Formatters.moneyDisplay(group.totalAmountExpenses())}"),
-                      ],
-                    )),
+                  title: Text(
+                    group.title,
+                    style: const TextStyle(color: AppColor.dark),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          "Limite de gastos: ${Formatters.moneyDisplay(group.spendingLimit)}"),
+                      Text(
+                          "Saída: ${Formatters.moneyDisplay(group.totalAmountExpenses())}"),
+                    ],
+                  ),
+                  onTap: () => Get.toNamed('/expense', arguments: group),
+                  onLongPress: () =>
+                      openBottomSheet(context: context, group: group),
+                ),
               ),
-              onTap: () => Get.toNamed('/expense', arguments: group),
-              onLongPress: () =>
-                  openBottomSheet(context: context, group: group),
             );
           });
     });
@@ -89,11 +91,12 @@ class GroupPage extends GetView<GroupController> {
       {required BuildContext context, required GroupModel group}) {
     Get.bottomSheet<String?>(
       BottomSheetGroup(callback: (option) async {
+        Get.back();
         if (option == 1) {
           final res = await openDialog(context: context, group: group);
           if (res != null) controller.editGroup(group: res);
         } else if (option == 3) {
-          final res = await showDialog<bool>(
+          final res = await showDialog<bool?>(
               context: context,
               builder: (context) {
                 return DialogDeleteGroup(
@@ -102,7 +105,6 @@ class GroupPage extends GetView<GroupController> {
               });
           if (res == true) controller.deleteGroup(group: group);
         }
-        Get.back();
       }),
       backgroundColor: Colors.white,
       persistent: false,

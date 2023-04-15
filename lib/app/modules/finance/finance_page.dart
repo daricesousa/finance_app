@@ -36,26 +36,28 @@ class FinancePage extends GetView<FinanceController> {
           itemBuilder: (context, index) {
             if (index == listLength) return const SizedBox(height: 60);
             final finance = controller.finances[index];
-            return GestureDetector(
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(20),
               child: Card(
                 child: ListTile(
-                    title: Text(
-                      finance.title,
-                      style: const TextStyle(color: AppColor.dark),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            "Entrada: ${Formatters.moneyDisplay(finance.inflow)}"),
-                        Text(
-                            "Saída: ${Formatters.moneyDisplay(finance.totalAmountExpenses())}"),
-                      ],
-                    )),
+                  title: Text(
+                    finance.title,
+                    style: const TextStyle(color: AppColor.dark),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          "Entrada: ${Formatters.moneyDisplay(finance.inflow)}"),
+                      Text(
+                          "Saída: ${Formatters.moneyDisplay(finance.totalAmountExpenses())}"),
+                    ],
+                  ),
+                  onTap: () => Get.toNamed('/group', arguments: finance),
+                  onLongPress: () =>
+                      openBottomSheet(context: context, finance: finance),
+                ),
               ),
-              onTap: () => Get.toNamed('/group', arguments: finance),
-              onLongPress: () =>
-                  openBottomSheet(context: context, finance: finance),
             );
           });
     });

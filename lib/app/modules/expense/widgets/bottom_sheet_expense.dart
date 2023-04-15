@@ -31,10 +31,10 @@ class BottomSheetExpense extends StatelessWidget {
           onTap: () => callback.call(2),
         ),
         ListTile(
-          leading: const Icon(Icons.delete, color: AppColor.dark),
+          leading: const Icon(Icons.delete, color: AppColor.red),
           title: const Text(
             "Deletar",
-            style: TextStyle(color: AppColor.dark),
+            style: TextStyle(color: AppColor.red),
           ),
           onTap: () => callback.call(3),
         )

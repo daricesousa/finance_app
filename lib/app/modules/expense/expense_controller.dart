@@ -24,4 +24,9 @@ class ExpenseController extends GetxController {
     expenses[index] = expense;
     _groupController.editGroup(group: group);
   }
+
+  void deleteExpense({required ExpenseModel expense}) {
+    expenses.removeWhere((e) => e.id == expense.id);
+    _groupController.editGroup(group: group);
+  }
 }
