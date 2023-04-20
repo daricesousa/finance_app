@@ -1,10 +1,12 @@
 import 'package:finance_app/app/core/utils/formatters.dart';
+import 'package:finance_app/app/core/utils/monthEnum.dart';
 import 'package:finance_app/app/core/widgets/app_button.dart';
 import 'package:finance_app/app/core/widgets/app_form_field.dart';
 import 'package:finance_app/app/models/finance_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask/mask.dart';
+import 'package:month_selector/month_selector.dart';
 
 class DialogAddFinance extends StatefulWidget {
   final FinanceModel? finance;
@@ -15,7 +17,7 @@ class DialogAddFinance extends StatefulWidget {
 }
 
 class _DialogAddFinanceState extends State<DialogAddFinance> {
-  final editTitle = TextEditingController();
+  DateTime? editMonth;
   final editPrice = TextEditingController();
 
   @override
@@ -28,14 +30,13 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
 
   @override
   void dispose() {
-    editTitle.dispose();
     editPrice.dispose();
     super.dispose();
   }
 
   loadFinance() {
     final FinanceModel finance = widget.finance!;
-    editTitle.text = finance.title;
+    editMonth = finance.month;
     editPrice.text = Formatters.moneyDisplay(finance.inflow);
   }
 
@@ -59,11 +60,36 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
                     textAlign: TextAlign.center),
               ),
               const SizedBox(height: 20),
-              AppFormField(
-                label: "Título",
-                maxLength: 20,
-                controller: editTitle,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: AppButton(
+                  label: editMonth != null
+                      ? Formatters.monthDisplay(editMonth!)
+                      : "Mês da finança",
+                  height: 50,
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return MonthSelector(
+                            months:
+                                MonthEnum.values.map((e) => e.name).toList(),
+                            labelCancel: "Cancelar",
+                            selectedDate: editMonth != null ? [editMonth!] : [],
+                            callback: (res) {
+                              Navigator.pop(context);
+                              if (res != null && res != []) {
+                                setState(() {
+                                  editMonth = res[0];
+                                });
+                              }
+                            },
+                          );
+                        });
+                  },
+                ),
               ),
+              const SizedBox(height: 20),
               AppFormField(
                 label: "Total de entrada",
                 textInputType: TextInputType.number,
@@ -75,7 +101,7 @@ class _DialogAddFinanceState extends State<DialogAddFinance> {
                 final newFinance = FinanceModel(
                   id: widget.finance?.id,
                   inflow: Formatters.moneyToDouble(editPrice.text),
-                  title: editTitle.text,
+                  month: editMonth ?? DateTime.now(),
                   groups: widget.finance?.groups ?? [],
                 );
                 Get.back(result: newFinance);

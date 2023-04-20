@@ -4,13 +4,13 @@ import 'package:finance_app/app/core/utils/constants.dart';
 class FinanceModel {
   int id;
   double inflow;
-  String title;
+  DateTime month;
   List<GroupModel> groups;
 
   FinanceModel({
     int? id,
     required this.inflow,
-    required this.title,
+    required this.month,
     required this.groups,
   }) : id = id ?? Constants.uid();
 
@@ -18,7 +18,7 @@ class FinanceModel {
     return {
       'id': id,
       'inflow': inflow,
-      'title': title,
+      'month': month.toString(),
       'groups': groups.map((GroupModel e) => e.toMap()).toList(),
     };
   }
@@ -27,7 +27,7 @@ class FinanceModel {
     return FinanceModel(
         id: map['id'] ?? -1,
         inflow: map['inflow']?.toDouble() ?? 0.0,
-        title: map['title'] ?? '',
+        month: DateTime.parse(map['month']),
         groups: List<GroupModel>.from(
             map['groups']?.map((e) => GroupModel.fromMap(e))).toList());
   }

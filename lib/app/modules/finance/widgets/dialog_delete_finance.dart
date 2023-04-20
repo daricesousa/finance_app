@@ -1,4 +1,5 @@
 import 'package:finance_app/app/core/ui/app_color.dart';
+import 'package:finance_app/app/core/utils/formatters.dart';
 import 'package:finance_app/app/core/widgets/app_button.dart';
 import 'package:finance_app/app/models/finance_model.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _DialogDeleteFinanceState extends State<DialogDeleteFinance> {
                   text: "Tem certeza que deseja deletar a finança ",
                   children: [
                     TextSpan(
-                        text: widget.finance.title,
+                        text: Formatters.monthDisplay(widget.finance.month),
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, color: AppColor.dark)),
                     const TextSpan(text: "?"),

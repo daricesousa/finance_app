@@ -41,7 +41,7 @@ class FinancePage extends GetView<FinanceController> {
               child: Card(
                 child: ListTile(
                   title: Text(
-                    finance.title,
+                    Formatters.monthDisplay(finance.month),
                     style: const TextStyle(color: AppColor.dark),
                   ),
                   subtitle: Column(

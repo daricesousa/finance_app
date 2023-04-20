@@ -17,19 +17,11 @@ class GroupPage extends GetView<GroupController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Visibility(
-          visible: controller.finance.title != '',
-          replacement: const Text("Grupo",
-              style: TextStyle(
-                color: AppColor.dark,
-                fontWeight: FontWeight.w300,
-              )),
-          child: Text(controller.finance.title,
-              style: const TextStyle(
-                color: AppColor.dark,
-                fontWeight: FontWeight.w300,
-              )),
-        ),
+        title: Text(Formatters.monthDisplay(controller.finance.month),
+            style: const TextStyle(
+              color: AppColor.dark,
+              fontWeight: FontWeight.w300,
+            )),
         centerTitle: true,
       ),
       body: body(),
@@ -57,8 +49,12 @@ class GroupPage extends GetView<GroupController> {
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                          "Limite de gastos: ${Formatters.moneyDisplay(group.spendingLimit)}"),
+                      Visibility(
+                        visible: group.spendingLimit != 0,
+                        replacement: const SizedBox(),
+                        child: Text(
+                            "Limite de gastos: ${Formatters.moneyDisplay(group.spendingLimit)}"),
+                      ),
                       Text(
                           "Saída: ${Formatters.moneyDisplay(group.totalAmountExpenses())}"),
                     ],
