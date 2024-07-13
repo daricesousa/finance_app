@@ -61,7 +61,6 @@ class _DialogAddExpenseState extends State<DialogAddExpense> {
               const SizedBox(height: 20),
               AppFormField(
                 label: "Título",
-                maxLength: 20,
                 controller: editTitle,
               ),
               AppFormField(

@@ -57,7 +57,6 @@ class _DialogAddGroupState extends State<DialogAddGroup> {
               const SizedBox(height: 20),
               AppFormField(
                 label: "Título",
-                maxLength: 20,
                 controller: editTitle,
               ),
               AppFormField(

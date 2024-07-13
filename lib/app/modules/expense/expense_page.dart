@@ -16,17 +16,10 @@ class ExpensePage extends GetView<ExpenseController> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Visibility(
-          visible: controller.group.title != '',
-          replacement: const Text(
-            "Despesas",
-            style: TextStyle(color: AppColor.dark, fontWeight: FontWeight.w300),
-          ),
-          child: Text(
-            controller.group.title,
-            style: const TextStyle(
-                color: AppColor.dark, fontWeight: FontWeight.w300),
-          ),
+        title: Text(
+          controller.group.title != '' ? controller.group.title : 'Despesas',
+          style: const TextStyle(
+              color: AppColor.dark, fontWeight: FontWeight.w300),
         ),
       ),
       body: _Body(controller: controller),
